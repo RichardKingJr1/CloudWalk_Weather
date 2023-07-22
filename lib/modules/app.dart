@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../router_generator.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/current',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

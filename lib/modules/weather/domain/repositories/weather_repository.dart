@@ -6,8 +6,8 @@ import '../entities/coodinates.dart';
 
 abstract class WeatherRepository {
 
-  Future<Either<Failure,Weather>> getCurrent(Coordinates coordinates);
+  Future<Either<Failure, Weather>> getCurrent(Coordinates coordinates);
 
-  Future<Either<Failure, List<Weather>>>getForecast(Coordinates coordinates);
+  Future<Either<Failure, List<Weather>>> getForecast(Coordinates coordinates);
 
 }

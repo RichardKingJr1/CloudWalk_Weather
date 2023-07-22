@@ -1,7 +1,7 @@
 import 'package:cloudwalk_weather/core/dependencies/http_app/httpApp.dart';
-import 'package:cloudwalk_weather/modules/weather/data/datasources/external/weather_datasource_http.dart';
-import 'package:cloudwalk_weather/modules/weather/data/datasources/weather_datasource.dart';
-import 'package:cloudwalk_weather/modules/weather/data/models/weather_model.dart';
+import 'package:cloudwalk_weather/modules/weather/infra/datasources/external/weather_datasource_http.dart';
+import 'package:cloudwalk_weather/modules/weather/infra/datasources/weather_datasource.dart';
+import 'package:cloudwalk_weather/modules/weather/infra/models/weather_model.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/entities/coodinates.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -44,11 +44,11 @@ class WeatherModel extends Weather {
   factory WeatherModel.fromMap(Map<String, dynamic> map) {
     return WeatherModel(
       dt: DateTime.fromMillisecondsSinceEpoch(map['dt'] as int),
-      temp: map['temp'] as double,
-      temp_max: map['temp_max'] as double,
-      temp_min: map['temp_min'] as double,
-      weather_main: map['weather_main'] as String,
-      icon: map['icon'] as String,
+      temp: map['main']['temp'] as double,
+      temp_max: map['main']['temp_max'] as double,
+      temp_min: map['main']['temp_min'] as double,
+      weather_main: map['weather'][0]['main'] as String,
+      icon: map['weather'][0]['icon'] as String,
     );
   }
 

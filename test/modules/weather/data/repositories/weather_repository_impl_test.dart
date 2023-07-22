@@ -12,7 +12,7 @@ class WeatherDatasourceMock extends  Mock implements WeatherDatasource {}
 
 void main() {
   
-  group('description', () { 
+  group('getCurrent', () { 
 
     WeatherDatasource weatherDatasourceMock = WeatherDatasourceMock();
     WeatherRepository weatherRepository = WeatherRepositoryImpl(weatherDatasource: weatherDatasourceMock);
@@ -32,7 +32,7 @@ void main() {
     test('Dadas as cordenadas, ao buscar o clima atual e ocorrer um erro, espera que seja retornado um Failure ', () async {
 
       Coordinates coordinates = Coordinates(lat: 1, lon: 1);
-      when(() => weatherDatasourceMock.getForecast(coordinates)).thenAnswer((_) async => throw Exception());
+      when(() => weatherDatasourceMock.getCurrent(coordinates)).thenAnswer((_) async => throw Exception());
 
       final response = await weatherRepository.getCurrent(coordinates);
 
@@ -40,5 +40,37 @@ void main() {
 
     });
   });
+
+  group('getForecast', () { 
+
+    WeatherDatasource weatherDatasourceMock = WeatherDatasourceMock();
+    WeatherRepository weatherRepository = WeatherRepositoryImpl(weatherDatasource: weatherDatasourceMock);
+
+
+    test('Dadas as coordenadas, ao buscar o clima futuro, deve retornar List<weather> quando for Right', () async {
+
+      Coordinates coordinates = Coordinates(lat: 1, lon: 1);
+      final weather = [WeatherModel(dt: DateTime.now(), temp: 1, temp_max: 1, temp_min: 1, weather_main: 'weather_main', icon: 'icon')];
+      when(() => weatherDatasourceMock.getForecast(coordinates)).thenAnswer((_) async => weather);
+
+      final response = await weatherRepository.getForecast(coordinates);
+
+      expect(response.getOrElse(() => throw Exception()), isA<List<Weather>>());
+    });
+
+    test('Dadas as cordenadas, ao buscar o clima futuro e ocorrer um erro, espera que seja retornado um Failure ', () async {
+
+      Coordinates coordinates = Coordinates(lat: 1, lon: 1);
+      when(() => weatherDatasourceMock.getForecast(coordinates)).thenAnswer((_) async => throw Exception());
+
+      final response = await weatherRepository.getForecast(coordinates);
+
+      expect(response.fold(id,id), isA<Failure>());
+
+    });
+  });
+
+
+  
 
 }

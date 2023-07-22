@@ -1,45 +1,35 @@
-import 'package:cloudwalk_weather/core/Errors/failure.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-class HttpApp {
+abstract class Http {
+  Future<Response> get(String path, {Map<String, dynamic>? queryParameters});
+  Future<Response> post(String path, dynamic data);
+  Future<Response> put(String path, dynamic data);
+  Future<Response> delete(String path);
+}
+
+
+class HttpImpl implements Http {
   final Dio _dio;
 
-  HttpApp() : _dio = Dio();
+  HttpImpl() : _dio = Dio();
 
-  Future<Either<Failure, dynamic>> get(String url, {Map<String, dynamic>? queryParameters, Options? options}) async {
-    try{
-      Response response = await _dio.get(url, queryParameters: queryParameters, options: options);
-      return Right(response.data);
-    } catch (e) {
-      return Left(Failure(title: "Erro ao realizar dio get", message: e.toString()));
-    }
+  @override
+  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) {
+    return _dio.get(path, queryParameters: queryParameters);
   }
 
-  Future<Either<Failure, dynamic>> post(String url, {dynamic data, Map<String, dynamic>? queryParameters}) async {
-    try{
-      Response response = await _dio.post(url, data: data, queryParameters: queryParameters);
-      return Right(response.data);
-    } catch (e) {
-      return Left(Failure(title: "Erro ao realizar dio post", message: e.toString()));
-    } 
+  @override
+  Future<Response> post(String path, dynamic data) {
+    return _dio.post(path, data: data);
   }
 
-  Future<Either<Failure, dynamic>> put(String url, {dynamic data, Map<String, dynamic>? queryParameters}) async {
-    try{
-      Response response = await _dio.put(url, data: data, queryParameters: queryParameters);
-      return Right(response.data);
-    } catch (e) {
-      return Left(Failure(title: "Erro ao realizar dio put", message: e.toString()));
-    }
+  @override
+  Future<Response> put(String path, dynamic data) {
+    return _dio.put(path, data: data);
   }
 
-  Future<Either<Failure, dynamic>> delete(String url, {Map<String, dynamic>? queryParameters}) async {
-    try{
-      Response response = await _dio.delete(url, queryParameters: queryParameters);
-      return Right(response.data);
-    } catch (e) {
-      return Left(Failure(title: "Erro ao realizar dio delete", message: e.toString()));
-    }
+  @override
+  Future<Response> delete(String path) {
+    return _dio.delete(path);
   }
 }

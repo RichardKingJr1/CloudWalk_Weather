@@ -8,14 +8,14 @@ import 'modules/weather/domain/repositories/weather_repository.dart';
 import 'modules/weather/domain/usecases/get_current_weather.dart';
 import 'modules/weather/domain/usecases/get_forecast_weather.dart';
 
-GetIt getIt = GetIt.I;
+GetIt getIt = GetIt.instance;
 
 void setUpProviders() {
 
   getIt.registerSingleton<Http>(HttpImpl());
-  getIt.registerSingleton<WeatherDatasource>(WeatherDatasourceHttp(http: getIt<HttpImpl>()));
-  getIt.registerSingleton<WeatherRepository>(WeatherRepositoryImpl(weatherDatasource: getIt<WeatherDatasourceHttp>()));
-  getIt.registerSingleton<GetCurrentWeather>(GetCurrentWeatherImpl(weatherRepository: getIt<WeatherRepositoryImpl>()));
-  getIt.registerSingleton<GetForecastWeatherImpl>(GetForecastWeatherImpl(weatherRepository: getIt<WeatherRepositoryImpl>()));
+  getIt.registerSingleton<WeatherDatasource>(WeatherDatasourceHttp(http: getIt<Http>()));
+  getIt.registerSingleton<WeatherRepository>(WeatherRepositoryImpl(weatherDatasource: getIt<WeatherDatasource>()));
+  getIt.registerSingleton<GetCurrentWeather>(GetCurrentWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
+  getIt.registerSingleton<GetForecastWeatherImpl>(GetForecastWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
 
 }

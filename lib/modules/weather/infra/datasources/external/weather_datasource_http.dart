@@ -23,7 +23,7 @@ class WeatherDatasourceHttp implements WeatherDatasource{
 
   @override
   Future<List<WeatherModel>> getForecast(Coordinates coordinates) async {
-    var response = await http.get("${Constants.baseUrl}weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${Constants.apiKey}");
+    var response = await http.get("${Constants.baseUrl}forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${Constants.apiKey}");
     if(response.statusCode == 200) {
       return List<WeatherModel>.from((response.data['list'] as List).map<WeatherModel>((x) => WeatherModel.fromMap(x as Map<String,dynamic>)));
     } else {

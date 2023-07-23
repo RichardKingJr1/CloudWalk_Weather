@@ -4,17 +4,11 @@ part of 'current_weather_bloc.dart';
 abstract class CurrentWeatherState {}
 
 class CurrentWeatherSuccess implements CurrentWeatherState {
-  final Weather weather;
+  final List<City> cities;
 
-  CurrentWeatherSuccess(this.weather);
+  CurrentWeatherSuccess(this.cities);
 
-  CurrentWeatherSuccess copyWith({
-    Weather? weather,
-  }) {
-    return CurrentWeatherSuccess(
-      weather ?? this.weather,
-    );
-  }
+
 }
 
 class CurrentWeatherInitial implements CurrentWeatherState {}

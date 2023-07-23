@@ -10,6 +10,7 @@ import '../entities/weather.dart';
 abstract class GetForecastWeather {
   Future<Either<Failure, List<Weather>>> getWeather(Coordinates coordinates);
   Future<Either<Failure, List<City>>> allCities();
+  List<City> filterCities({required String txt, required List<City> allCities});
 } 
 
 class GetForecastWeatherImpl implements GetForecastWeather {
@@ -45,7 +46,13 @@ class GetForecastWeatherImpl implements GetForecastWeather {
     } else {
       return Right(cities);
     } 
-    
+  }
+
+  @override
+  List<City> filterCities({required String txt, required List<City> allCities}) {
+    if(txt == '') return allCities;
+    List<City> fileredCities = allCities.where((city) => city.cityName.toLowerCase().contains(txt.toLowerCase()) ).toList();
+    return fileredCities;
   }
 
 }

@@ -8,7 +8,6 @@ class CurrentWeatherSuccess implements CurrentWeatherState {
 
   CurrentWeatherSuccess(this.cities);
 
-
 }
 
 class CurrentWeatherInitial implements CurrentWeatherState {}

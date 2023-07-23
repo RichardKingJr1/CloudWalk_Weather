@@ -1,9 +1,12 @@
+
+import 'package:cloudwalk_weather/modules/weather/domain/usecases/filter_cities.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/usecases/get_current_weather.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../core/widgets/app_bar.dart';
 import '../../../../core/widgets/app_botton.dart';
 import '../bloc/current_weather/current_weather_bloc.dart';
 
@@ -16,7 +19,7 @@ class CurrentWeatPage extends StatefulWidget {
 
 class _CurrentWeatPageState extends State<CurrentWeatPage> {
 
-  final bloc = CurrentWeatherBloc(usecase: GetIt.I.get<GetCurrentWeather>());
+  final bloc = CurrentWeatherBloc(usecase: GetIt.I.get<GetCurrentWeather>(), filterCities: GetIt.I.get<FilterCities>());
 
   @override
   void initState() {
@@ -40,15 +43,20 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
         final state = bloc.state;
         if(state is CurrentWeatherSuccess) {
           return Scaffold(
+            appBar: CustomAppBar(
+              onChanged: (value) {
+                bloc.add(FilterEvent(text: value));
+              }
+            ),
             bottomNavigationBar: AppBotton(cont: context, selectedIndex: 0),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: state.cities.length,
+                  itemCount: state.filteredCities.length,
                   itemBuilder: (context, index) {
-                    final city = state.cities[index];
+                    final city = state.filteredCities[index];
                     return Container(
                       height: 170,
                       child: Card(

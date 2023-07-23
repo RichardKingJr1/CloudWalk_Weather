@@ -14,7 +14,8 @@ dependencies:
   dio:
   dartz:
   get_it:
-  
+  bloc: ^8.1.2 
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

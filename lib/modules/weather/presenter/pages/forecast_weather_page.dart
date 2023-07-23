@@ -1,3 +1,4 @@
+import 'package:cloudwalk_weather/modules/weather/domain/usecases/filter_cities.dart';
 import 'package:cloudwalk_weather/modules/weather/presenter/bloc/forecast_weather/forecast_weather_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,7 +18,7 @@ class ForecastWeatherPage extends StatefulWidget {
 
 class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
 
-  final bloc = ForecastWeatherBloc(usecase: GetIt.I.get<GetForecastWeather>());
+  final bloc = ForecastWeatherBloc(usecase: GetIt.I.get<GetForecastWeather>(), filterCities:  GetIt.I.get<FilterCities>());
 
   @override
   void initState() {

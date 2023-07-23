@@ -16,6 +16,6 @@ void setUpProviders() {
   getIt.registerSingleton<WeatherDatasource>(WeatherDatasourceHttp(http: getIt<Http>()));
   getIt.registerSingleton<WeatherRepository>(WeatherRepositoryImpl(weatherDatasource: getIt<WeatherDatasource>()));
   getIt.registerSingleton<GetCurrentWeather>(GetCurrentWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
-  getIt.registerSingleton<GetForecastWeatherImpl>(GetForecastWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
+  getIt.registerSingleton<GetForecastWeather>(GetForecastWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
 
 }

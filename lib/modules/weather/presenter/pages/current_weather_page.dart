@@ -23,7 +23,6 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
     // TODO: implement initState
     bloc.add(GetWeatherEvent());
     super.initState();
-    //settingsBloc = SettingsBloc(globalBloc: BlocProvider.of<GlobalBloc>(context));
   }
 
   @override

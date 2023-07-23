@@ -1,8 +1,8 @@
 import 'package:cloudwalk_weather/modules/weather/presenter/bloc/forecast_weather/forecast_weather_bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/widgets/app_botton.dart';
 import '../../domain/usecases/get_forecast_weather.dart';
@@ -17,6 +17,20 @@ class ForecastWeatherPage extends StatefulWidget {
 class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
 
   final bloc = ForecastWeatherBloc(usecase: GetIt.I.get<GetForecastWeather>());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    bloc.add(GetWeatherEvent());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    bloc.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +56,7 @@ class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
                   itemCount: state.cities.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      height: 170,
+                      height: 240,
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
@@ -55,23 +69,27 @@ class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
                               ),
                               SizedBox(height: 5),
                               ListView.builder(
-                                itemCount: state.cities.length,
+                                shrinkWrap: true,
+                                itemCount: 5,
+                                //itemCount: state.cities.length,
                                 itemBuilder: (context, ind) {
+                                  var indFix = ind * 8;
                                   return Row(
                                     children: [
-                                      Text('dia'),
+                                      Text(DateFormat('dd/MM').format(state.cities[index].forecast![indFix].dt)),
+                                      //Text(state.cities[index].forecast![indFix].dt.millisecondsSinceEpoch.toString()),
                                       Spacer(),
                                       Image.network(
-                                        'http://openweathermap.org/img/wn/${state.cities[index].forecast![ind].icon}@2x.png',
+                                        'http://openweathermap.org/img/wn/${state.cities[index].forecast![indFix].icon}@2x.png',
                                         height: 30,
                                         width: 50,
                                       ),
                                       SizedBox(width: 5),
-                                      Text(state.cities[index].forecast![ind].weather_main),
-                                      SizedBox(width: 15),
-                                      Text(state.cities[index].forecast![ind].temp.toString()),
+                                      Text(state.cities[index].forecast![indFix].weather_main),
+                                      //SizedBox(width: 15),
+                                      //Text(state.cities[index].forecast![ind].temp.toString()),
                                       Spacer(),
-                                      Text('${state.cities[index].forecast![ind].temp_min.toString()}°/${state.cities[index].forecast![ind].temp_max.toString()}°'),
+                                      Text('${state.cities[index].forecast![indFix].temp_min.toString()}°/${state.cities[index].forecast![ind].temp_max.toString()}°'),
                                       SizedBox(width: 20,)
                                     ],
                                   );

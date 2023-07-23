@@ -68,11 +68,15 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
                               SizedBox(height: 5),
                               Row(
                                 children: [
-                                  Image.network('http://openweathermap.org/img/wn/${city.currentWeather!.icon}@2x.png'),
+                                  Image.network(
+                                    'http://openweathermap.org/img/wn/${city.currentWeather!.icon}@2x.png',
+                                    height: 75,
+                                    width: 75,
+                                  ),
                                   SizedBox(width: 5),
                                   Text(
                                     "${city.currentWeather!.temp.toString()}°",
-                                    style: const TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.w400),
+                                    style: const TextStyle(color: Colors.black, fontSize: 35, fontWeight: FontWeight.w400),
                                   ),
                                   Spacer(),
                                   Column(

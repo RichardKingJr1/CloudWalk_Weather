@@ -1,12 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.onChanged});
+  const CustomAppBar({
+    Key? key,
+    required this.onChanged,
+    required this.refresh,
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(56.0);
 
   final Function onChanged;
+  final Function refresh;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -30,6 +36,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
             setState(() {
               _isSearching = !_isSearching;
             });
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: () {
+            widget.refresh();
           },
         ),
       ],

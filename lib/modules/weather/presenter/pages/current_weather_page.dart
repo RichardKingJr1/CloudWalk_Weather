@@ -46,7 +46,10 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
             appBar: CustomAppBar(
               onChanged: (value) {
                 bloc.add(FilterEvent(text: value));
-              }
+              },
+              refresh: () {
+                bloc.add(GetWeatherEvent());
+              },
             ),
             bottomNavigationBar: AppBotton(cont: context, selectedIndex: 0),
             body: SafeArea(

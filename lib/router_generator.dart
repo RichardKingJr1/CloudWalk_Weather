@@ -12,7 +12,7 @@ class RouteGenerator {
 
     switch (settings.name) {
 
-      case '/current':
+      case '/':
         return MaterialPageRoute(builder: (_) => CurrentWeatPage());
 
       case '/forecast':

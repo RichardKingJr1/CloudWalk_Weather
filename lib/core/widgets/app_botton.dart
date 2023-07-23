@@ -35,7 +35,7 @@ class _AppBottonState extends State<AppBotton> {
       switch (index) {
         case 0:
           Navigator.of(widget.cont)
-              .pushNamedAndRemoveUntil('/current', (Route<dynamic> route) => false);
+              .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
           break;
         case 1:
           Navigator.of(widget.cont)

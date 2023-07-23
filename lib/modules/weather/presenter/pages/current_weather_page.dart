@@ -43,56 +43,54 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
           return Scaffold(
             bottomNavigationBar: AppBotton(cont: context, selectedIndex: 0),
             body: SafeArea(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.cities.length,
-                    itemBuilder: (context, index) {
-                      final city = state.cities[index];
-                      return Container(
-                        height: 170,
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10,left: 20.0),
-                                  child: Text(
-                                    city.cityName,
-                                    style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w400),
-                                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.cities.length,
+                  itemBuilder: (context, index) {
+                    final city = state.cities[index];
+                    return Container(
+                      height: 170,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10,left: 20.0),
+                                child: Text(
+                                  city.cityName,
+                                  style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w400),
                                 ),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Image.network('http://openweathermap.org/img/wn/${city.currentWeather!.icon}@2x.png'),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "${city.currentWeather!.temp.toString()}°",
-                                      style: const TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.w400),
-                                    ),
-                                    Spacer(),
-                                    Column(
-                                      children: [
-                                        Text(city.currentWeather!.weather_main),
-                                        Text('min: ${city.currentWeather!.temp_min.toString()}°'),
-                                        Text('max: ${city.currentWeather!.temp_max.toString()}°'),
-                                      ],
-                                    ),
-                                    SizedBox(width: 20,)
-                                  ],
-                                )
-                              ],
-                            ),
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Image.network('http://openweathermap.org/img/wn/${city.currentWeather!.icon}@2x.png'),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    "${city.currentWeather!.temp.toString()}°",
+                                    style: const TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.w400),
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    children: [
+                                      Text(city.currentWeather!.weather_main),
+                                      Text('min: ${city.currentWeather!.temp_min.toString()}°'),
+                                      Text('max: ${city.currentWeather!.temp_max.toString()}°'),
+                                    ],
+                                  ),
+                                  SizedBox(width: 20,)
+                                ],
+                              )
+                            ],
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

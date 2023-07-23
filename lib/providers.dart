@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import 'core/dependencies/http_app/httpApp.dart';
+import 'modules/weather/domain/usecases/filter_cities.dart';
 import 'modules/weather/infra/datasources/external/weather_datasource_http.dart';
 import 'modules/weather/infra/datasources/weather_datasource.dart';
 import 'modules/weather/infra/repositories/weather_repository_impl.dart';
@@ -17,5 +18,6 @@ void setUpProviders() {
   getIt.registerSingleton<WeatherRepository>(WeatherRepositoryImpl(weatherDatasource: getIt<WeatherDatasource>()));
   getIt.registerSingleton<GetCurrentWeather>(GetCurrentWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
   getIt.registerSingleton<GetForecastWeather>(GetForecastWeatherImpl(weatherRepository: getIt<WeatherRepository>()));
+  getIt.registerSingleton<FilterCities>(FilterCitiesImpl());
 
 }

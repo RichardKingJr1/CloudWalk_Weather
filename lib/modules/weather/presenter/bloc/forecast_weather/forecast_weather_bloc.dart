@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloudwalk_weather/modules/weather/domain/usecases/filter_cities.dart';
 import 'package:meta/meta.dart';
 
 import '../../../domain/entities/city.dart';
@@ -10,8 +11,9 @@ part 'forecast_weather_state.dart';
 class ForecastWeatherBloc extends Bloc<ForecastWeatherEvent, ForecastWeatherState> {
 
   final GetForecastWeather usecase;
+  final FilterCities filterCities;
 
-  ForecastWeatherBloc({required this.usecase}) : super(ForecastWeatherInitial()) {
+  ForecastWeatherBloc({required this.filterCities, required this.usecase}) : super(ForecastWeatherInitial()) {
 
     on<GetWeatherEvent>((event, emit) async {
       emit(ForecastWeatherLoading());
@@ -23,7 +25,7 @@ class ForecastWeatherBloc extends Bloc<ForecastWeatherEvent, ForecastWeatherStat
     });
 
     on<FilterEvent>((event, emit) async {
-      final result = usecase.filterCities(txt: event.text, allCities: (state as ForecastWeatherSuccess).cities);
+      final result = filterCities(txt: event.text, allCities: (state as ForecastWeatherSuccess).cities);
       emit((state as ForecastWeatherSuccess).copyWith(filteredCities: result));
     });
   }

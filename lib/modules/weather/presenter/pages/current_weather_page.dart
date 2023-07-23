@@ -52,6 +52,7 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
                     return Container(
                       height: 170,
                       child: Card(
+                        color: Color.fromARGB(255, 192, 192, 192),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(

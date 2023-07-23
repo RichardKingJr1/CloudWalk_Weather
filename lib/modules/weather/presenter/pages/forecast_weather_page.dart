@@ -58,6 +58,7 @@ class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
                     return Container(
                       height: 240,
                       child: Card(
+                        color: Color.fromARGB(255, 192, 192, 192),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
@@ -76,7 +77,7 @@ class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
                                   var indFix = ind * 8;
                                   return Row(
                                     children: [
-                                      Text(DateFormat('dd/MM').format(state.cities[index].forecast![indFix].dt)),
+                                      Text(DateFormat('dd/MM/yy').format(state.cities[index].forecast![indFix].dt)),
                                       //Text(state.cities[index].forecast![indFix].dt.millisecondsSinceEpoch.toString()),
                                       Spacer(),
                                       Image.network(

@@ -11,12 +11,12 @@ import 'package:mocktail/mocktail.dart'; // Replace with the actual import path
 class MockGetForecastWeather extends Mock implements GetForecastWeather {}
 
 void main() {
+
+  MockGetForecastWeather mockUseCase = MockGetForecastWeather();
+  ForecastWeatherBloc bloc = ForecastWeatherBloc(usecase: mockUseCase);
+
   group('ForecastWeatherBloc', () {
     
-    MockGetForecastWeather mockUseCase = MockGetForecastWeather();
-    ForecastWeatherBloc bloc = ForecastWeatherBloc(usecase: mockUseCase);
-
-
     test('emits CurrentWeatherLoading and CurrentWeatherSuccess on successful use case call', () async* {
 
       final coordinates = Coordinates(lat: 1, lon: 1);
@@ -29,7 +29,7 @@ void main() {
         bloc.state,
         emitsInOrder([
           ForecastWeatherLoading(),
-          ForecastWeatherSuccess(cities),
+          ForecastWeatherSuccess(cities: cities, filteredCities: cities),
         ]),
       );   
 
@@ -56,5 +56,37 @@ void main() {
     tearDown(() {
       bloc.close();
     });
+  });
+
+
+  test('test filter', () async* {
+
+    var coordinates = Coordinates(lat: 1, lon: 1);
+
+    final cities = [
+      City(cityName: 'New York', coordinates: coordinates),
+      City(cityName: 'London', coordinates: coordinates),
+      City(cityName: 'Paris', coordinates: coordinates),
+      City(cityName: 'Berlin', coordinates: coordinates),
+    ];
+
+    final filteredCities = [
+      City(cityName: 'London', coordinates: coordinates),
+      City(cityName: 'Berlin', coordinates: coordinates),
+    ];
+
+    final event = FilterEvent(text: 'L');
+    final state = ForecastWeatherSuccess(cities: cities, filteredCities: cities);
+    bloc.emit(state);
+
+    expectLater(
+        bloc.state,
+        emitsInOrder([
+          ForecastWeatherSuccess(cities: cities, filteredCities: filteredCities),
+        ]),
+      );   
+
+    
+    bloc.add(event);
   });
 }

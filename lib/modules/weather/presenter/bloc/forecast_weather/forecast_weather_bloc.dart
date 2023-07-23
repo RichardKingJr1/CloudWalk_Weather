@@ -13,13 +13,18 @@ class ForecastWeatherBloc extends Bloc<ForecastWeatherEvent, ForecastWeatherStat
 
   ForecastWeatherBloc({required this.usecase}) : super(ForecastWeatherInitial()) {
 
-    on<ForecastWeatherEvent>((event, emit) async {
+    on<GetWeatherEvent>((event, emit) async {
       emit(ForecastWeatherLoading());
       final result = await usecase.allCities();
       emit(result.fold(
         (l) => ForecastWeatherError(), 
-        (r) => ForecastWeatherSuccess(r)
+        (r) => ForecastWeatherSuccess(cities: r, filteredCities: r)
       ));
+    });
+
+    on<FilterEvent>((event, emit) async {
+      final result = usecase.filterCities(txt: event.text, allCities: (state as ForecastWeatherSuccess).cities);
+      emit((state as ForecastWeatherSuccess).copyWith(filteredCities: result));
     });
   }
 

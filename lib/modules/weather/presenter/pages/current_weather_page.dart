@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../core/widgets/app_bar.dart';
 import '../../../../core/widgets/app_botton.dart';
+import '../../domain/usecases/check_connectivity.dart';
 import '../bloc/current_weather/current_weather_bloc.dart';
 
 class CurrentWeatPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class CurrentWeatPage extends StatefulWidget {
 
 class _CurrentWeatPageState extends State<CurrentWeatPage> {
 
-  final bloc = CurrentWeatherBloc(usecase: GetIt.I.get<GetCurrentWeather>(), filterCities: GetIt.I.get<FilterCities>());
+  final bloc = CurrentWeatherBloc(usecase: GetIt.I.get<GetCurrentWeather>(), filterCities: GetIt.I.get<FilterCities>(), connectivity: GetIt.I.get<CheckConnectivity>());
 
   @override
   void initState() {
@@ -108,6 +109,23 @@ class _CurrentWeatPageState extends State<CurrentWeatPage> {
                   },
                 ),
               ),
+            ),
+          );
+        } else if(state is CurrentWeatherConnection) {
+          return Scaffold(
+            appBar: CustomAppBar(
+              onChanged: (value) {
+                bloc.add(FilterEvent(text: value));
+              },
+              refresh: () {
+                bloc.add(GetWeatherEvent());
+              },
+            ),
+            bottomNavigationBar: AppBotton(cont: context, selectedIndex: 0),
+            body: SafeArea(
+              child: Center(
+                child: Text('Sem Internet'),
+              )
             ),
           );
         } else {

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/entities/city.dart';
+import '../../../domain/usecases/check_connectivity.dart';
 import '../../../domain/usecases/filter_cities.dart';
 import '../../../domain/usecases/get_current_weather.dart';
 
@@ -10,11 +11,18 @@ class CurrentWeatherBloc extends Bloc<CurrentWeatherEvent, CurrentWeatherState> 
   
   final GetCurrentWeather usecase;
   final FilterCities filterCities;
+  final CheckConnectivity connectivity;
 
-  CurrentWeatherBloc({required this.filterCities, required this.usecase}) : super(CurrentWeatherInitial()) {
+  CurrentWeatherBloc({required this.connectivity, required this.filterCities, required this.usecase}) : super(CurrentWeatherInitial()) {
     
     on<GetWeatherEvent>((event, emit) async {
       emit(CurrentWeatherLoading());
+
+      if(await connectivity()) {
+        emit(CurrentWeatherConnection());
+        return;
+      }
+
       final result = await usecase.allCities();
       emit(result.fold(
         (l) => CurrentWeatherError(), 

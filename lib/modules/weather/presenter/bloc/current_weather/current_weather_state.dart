@@ -24,5 +24,6 @@ class CurrentWeatherSuccess implements CurrentWeatherState {
 class CurrentWeatherInitial implements CurrentWeatherState {}
 class CurrentWeatherLoading implements CurrentWeatherState {}
 class CurrentWeatherError implements CurrentWeatherState {}
+class CurrentWeatherConnection implements CurrentWeatherState {}
 
 

@@ -130,7 +130,7 @@ class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
           );
         } else {
           return Scaffold(
-            bottomNavigationBar: AppBotton(cont: context, selectedIndex: 0),
+            bottomNavigationBar: AppBotton(cont: context, selectedIndex: 1),
             body: SafeArea(
               child: Center(
                 child: Text('Carregando'),

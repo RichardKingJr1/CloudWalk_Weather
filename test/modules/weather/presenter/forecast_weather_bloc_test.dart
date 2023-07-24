@@ -2,6 +2,7 @@ import 'package:cloudwalk_weather/core/errors/failure.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/entities/city.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/entities/coodinates.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/entities/weather.dart';
+import 'package:cloudwalk_weather/modules/weather/domain/usecases/check_connectivity.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/usecases/filter_cities.dart';
 import 'package:cloudwalk_weather/modules/weather/domain/usecases/get_forecast_weather.dart';
 import 'package:cloudwalk_weather/modules/weather/presenter/bloc/forecast_weather/forecast_weather_bloc.dart';
@@ -13,9 +14,10 @@ class MockGetForecastWeather extends Mock implements GetForecastWeather {}
 
 void main() {
 
+  CheckConnectivity connectivity = CheckConnectivityImpl();
   FilterCities mockFilterCities = FilterCitiesImpl();
   MockGetForecastWeather mockUseCase = MockGetForecastWeather();
-  ForecastWeatherBloc bloc = ForecastWeatherBloc(usecase: mockUseCase, filterCities: mockFilterCities);
+  ForecastWeatherBloc bloc = ForecastWeatherBloc(usecase: mockUseCase, filterCities: mockFilterCities, connectivity: connectivity);
 
   group('ForecastWeatherBloc', () {
     

@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/widgets/app_bar.dart';
 import '../../../../core/widgets/app_botton.dart';
+import '../../domain/usecases/check_connectivity.dart';
 import '../../domain/usecases/get_forecast_weather.dart';
 
 class ForecastWeatherPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class ForecastWeatherPage extends StatefulWidget {
 
 class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
 
-  final bloc = ForecastWeatherBloc(usecase: GetIt.I.get<GetForecastWeather>(), filterCities:  GetIt.I.get<FilterCities>());
+  final bloc = ForecastWeatherBloc(usecase: GetIt.I.get<GetForecastWeather>(), filterCities:  GetIt.I.get<FilterCities>(), connectivity: GetIt.I.get<CheckConnectivity>());
 
   @override
   void initState() {
@@ -108,6 +109,23 @@ class _ForecastWeatherPageState extends State<ForecastWeatherPage> {
                   }
                 ),
               ),
+            ),
+          );
+        } else if(state is ForecastWeatherConnection) {
+          return Scaffold(
+            appBar: CustomAppBar(
+              onChanged: (value) {
+                bloc.add(FilterEvent(text: value));
+              },
+              refresh: () {
+                bloc.add(GetWeatherEvent());
+              },
+            ),
+            bottomNavigationBar: AppBotton(cont: context, selectedIndex: 1),
+            body: SafeArea(
+              child: Center(
+                child: Text('Sem Internet'),
+              )
             ),
           );
         } else {

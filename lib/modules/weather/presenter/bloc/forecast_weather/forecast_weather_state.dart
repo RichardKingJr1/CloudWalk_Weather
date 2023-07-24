@@ -24,4 +24,5 @@ class ForecastWeatherSuccess implements ForecastWeatherState {
 class ForecastWeatherInitial implements ForecastWeatherState {}
 class ForecastWeatherLoading implements ForecastWeatherState {}
 class ForecastWeatherError implements ForecastWeatherState {}
+class ForecastWeatherConnection implements ForecastWeatherState {}
 
